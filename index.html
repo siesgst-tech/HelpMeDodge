@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title id="gamename">Mithil's Flappy Bird</title>
+	<p><br><br><br><br><br><br></p>
+	<center>
+		<h1 id="h1">Help Me DODGE!</h1>
+	</center>
+	<center>
+		<h2 id="score">10</p>
+	</center>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		canvas {
+			background: #eee;
+			display: block;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+
+<body>
+
+	<canvas id="myCanvas" width="480" height="320"></canvas>
+
+	<script src="values.js"></script>
+	<script>
+		document.getElementById("h1").innerHTML = GameName;
+		document.getElementById("gamename").innerHTML = GameName;
+		var Score = 0;
+		var canvas = document.getElementById("myCanvas");
+		var ctx = canvas.getContext("2d");
+		var pipeHeight = 250;
+
+		var pipeWidth = 60;
+		var pipeX1 = canvas.width - pipeWidth;
+		var pipeX2 = pipeX1;
+		var pipeY1 = Math.random() * (+0 - +-230) + +-230; // range(-230, 0)
+		var pipeY2 = pipeY1 + pipeHeight + PipeGap;
+		var pipedx = 1;
+		var birdSize = 30;
+		var birdX = 30; //constant
+		var birdY = 40; // this is a range (0, canvas.height - birdSize)
+		var dy = 0;
+		var rightPressed = false;
+		var leftPressed = false;
+		document.addEventListener("keydown", keyDownHandler, false);
+		document.addEventListener("keyup", keyUpHandler, false);
+		function keyDownHandler(e) {
+			if (e.key == "Right" || e.key == DownKey) {
+				rightPressed = true;
+			}
+			else if (e.key == "Left" || e.key == UpKey) {
+				leftPressed = true;
+			}
+		}
+		function keyUpHandler(e) {
+			if (e.key == "Right" || e.key == DownKey) {
+				rightPressed = false;
+			}
+			else if (e.key == "Left" || e.key == UpKey) {
+				leftPressed = false;
+			}
+		}
+		function drawBird() {
+			if (birdX + birdSize > pipeX1 - pipedx + pipeWidth && birdX < pipeX1 - pipedx + pipeWidth)
+				if ((birdY + dy < (pipeY1 + pipeHeight)) || (birdY + birdSize + dy > pipeY2)) {
+					alert(Message);
+					location.reload();
+					clearInterval(interval);
+				}
+			if (rightPressed) dy += BirdSpeed;
+			if (leftPressed) dy -= BirdSpeed;
+			ctx.beginPath();
+			ctx.rect(birdX, birdY + dy, birdSize, birdSize);
+			ctx.fillStyle = PlayerColor;
+			ctx.fill();
+			ctx.closePath();
+		}
+		function drawPipe() {
+			if (pipeX1 + 2 * pipeWidth - pipedx <= 0) {
+				pipedx = 0;
+				pipeY1 = Math.random() * (+0 - +-230) + +-230;
+				pipeY2 = pipeY1 + pipeHeight + PipeGap;
+			}
+			ctx.beginPath();
+			ctx.rect(pipeX1 - pipedx + pipeWidth, pipeY1, pipeWidth, pipeHeight);
+			ctx.rect(pipeX2 - pipedx + pipeWidth, pipeY2, pipeWidth, pipeHeight);
+			ctx.fillStyle = PipeColor;
+			ctx.fill();
+			ctx.closePath();
+			pipedx += PipeSpeed;
+		}
+		function draw() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			drawBird();
+			drawPipe();
+			document.getElementById("score").innerHTML = "Score: " + Score;
+			Score += 1;
+		}
+
+		var interval = setInterval(draw, 10);
+	</script>
+</body>
+
+</html>
