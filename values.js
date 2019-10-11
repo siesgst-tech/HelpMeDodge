@@ -10,7 +10,7 @@ var DownKey = "ArrowRight";
 
 var Message = "DEAD!";
 var GameName = "Help Me DODGE viper!";
-var DisplayScore = true;
+var DisplayScore = false;
 
 /*
 https://www.w3schools.com/colors/colors_names.asp
