@@ -28,11 +28,13 @@
 <body>
 
 	<canvas id="myCanvas" width="480" height="320"></canvas>
-
+	
+	<p id="MadeBy"></p>
 	<script src="values.js"></script>
 	<script>
 		document.getElementById("h1").innerHTML = GameName;
 		document.getElementById("gamename").innerHTML = GameName;
+		document.getElementById("MadeBy").innerHTML = "Made By - " + MadeByName;
 		var Score = 0;
 		var canvas = document.getElementById("myCanvas");
 		var ctx = canvas.getContext("2d");
@@ -101,14 +103,13 @@
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			drawBird();
 			drawPipe();
-			if(DisplayScore)
-			document.getElementById("score").innerHTML = "Score: " + Score;
+			if (DisplayScore)
+				document.getElementById("score").innerHTML = "Score: " + Score;
 			Score += 1;
 		}
 
 		var interval = setInterval(draw, 10);
 	</script>
-	<p>Made by - </p>
 </body>
 
 </html>
